@@ -25,12 +25,12 @@ const handleProcessReceipt: RequestHandler<{}, any, Receipt> = (
   const id = uuid()
 
   if (!retailer || !purchaseDate || !purchaseTime || !items || !total) {
-    res.status(400).json({ error: 'invalid receipt' })
+    res.status(400).json({ error: 'The receipt is invalid.' })
   }
 
   for (const item of items) {
     if (!item.shortDescription || !item.price) {
-      res.status(400).json({ error: 'invalid receipt items' })
+      res.status(400).json({ error: 'The receipt is invalid.' })
     }
   }
 
@@ -44,7 +44,7 @@ app.post('/receipts/process', handleProcessReceipt)
 const handleGetPoints: RequestHandler<{ id: string }> = (req, res): void => {
   const { id } = req.params
   if (!receipts[id]) {
-    res.status(404).json({ error: 'receipt not found' })
+    res.status(404).json({ error: 'No receipt found for that ID.' })
   }
 
   res.status(200).json({ points: receiptPoints[id] })
